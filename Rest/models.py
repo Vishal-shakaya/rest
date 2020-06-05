@@ -3,34 +3,34 @@ from django.contrib.auth.models import AbstractBaseUser ,BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 # Create your models here.
 
-class My_UserManager(BaseUserManager):
-	def create_user(self, name , email , password=None):
+class MyUserManager(BaseUserManager):
+	def create_user(self, email,name, password=None):
 		if not email:
-			raise  ('value not define')
+			raise  ValueError('email  not define')
 		email= self.normalize_email(email)
-		user = self.model(email=email , name=name)
+		user = self.model(email=email , name=name,)
 		user.set_password(password)
 		user.save(using=self._db)
 		return user
 
 	def create_superuser(self, name , email , password=None):
-		user = self.create_user(name, email,password)
-		user.is_staff = True
+		user = self.create_user(email,name,password)
 		user.is_superuser = True
+		user.is_staff = True
 		user.save(using=self._db)
 		return user
 
 
 
 
-class My_User(AbstractBaseUser,PermissionsMixin):
+class MyUser(AbstractBaseUser,PermissionsMixin):
 	""" customize user model """
 	email = models.EmailField(max_length=255, unique=True)
 	name = models.CharField(max_length=255)
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 
-	objects = My_UserManager()
+	objects = MyUserManager()
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS =['name']
@@ -43,7 +43,7 @@ class My_User(AbstractBaseUser,PermissionsMixin):
 		return self.name
 
 	def get_full_name(self):
-		return self.name+self.email
+		return self.name
 	
 		
 		
