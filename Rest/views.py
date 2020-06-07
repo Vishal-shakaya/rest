@@ -8,6 +8,8 @@ from Rest import models
 from rest_framework.authentication import TokenAuthentication
 from Rest import permissions
 from rest_framework import filters
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 # Create your views here.
 
 class Home(TemplateView):
@@ -92,7 +94,7 @@ class UserViewSet(viewsets.ModelViewSet):
 	filter_backends = [filters.SearchFilter]
 	search_fields =['name','email']
 
-
      
-
+class LoginView(ObtainAuthToken):
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 

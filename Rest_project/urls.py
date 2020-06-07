@@ -19,6 +19,7 @@ from Rest import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('Rest.urls')),
+    path('login/',views.LoginView.as_view(),name='login'),
     path('',views.Home.as_view(),name='home'),
     path('api-auth/', include('rest_framework.urls')),
 

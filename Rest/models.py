@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser ,BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.conf import settings
 # Create your models here.
 
 class MyUserManager(BaseUserManager):
@@ -49,3 +50,10 @@ class MyUser(AbstractBaseUser,PermissionsMixin):
 		
 		
 
+class UserFeed(models.Model):
+	user_feed_id = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+	content = models.CharField(max_length=233)
+	create_date = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self): 
+		return self.content
