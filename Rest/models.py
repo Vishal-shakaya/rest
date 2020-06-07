@@ -44,7 +44,8 @@ class MyUser(AbstractBaseUser,PermissionsMixin):
 
 	def get_full_name(self):
 		return self.name
-	
+
+
 		
 		
 
